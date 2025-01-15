@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "server_setup"
+version = "0.0.1"
+description = "API for server setup"
+authors = ["zachfive <zacharyfive@gmail.com>"]
+license = "MIT"  # Optional, specify the license
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+#certifi = "2024.6.2"
+#charset-normalizer = "3.3.2"
+#idna = "3.7"
+python-dotenv = "1.0.1"
+requests = "2.32.3"
+#urllib3 = "2.2.2"
+websocket-client = "1.8.0"
+jellyfin-apiclient-python = { git = "https://github.com/jellyfin/jellyfin-apiclient-python.git", rev = "fe8c16c8e3a769743d1999d96f83fa14794648dc" }
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.0"  # Optional, for development/testing
+
+
+[tool.poetry.scripts]
+setup-server = "server_setup.setup_server:server_setup"  # Expose your script as a CLI tool (if needed)
+setup-threadfin = "server_setup.setup_threadfin:threadfin_setup"
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
