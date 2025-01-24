@@ -23,16 +23,25 @@ class ThreadfinWebSocketClient:
     def send_wizard(self, ws):
         try:
             print(self.m3u_url)
-            wizard_request = {
-                "wizard": {
-                    "EpgSource": "XEPG",
-                    "M3U": self.m3u_url,
-                    "Tuner": 1,
-                    "XMLTV": ""
+            m3u_request = {
+                "files": {
+                    "m3u": {
+                        "-": {
+                            "buffer": "-",
+                            "tuner": 1,
+                            "name": "LIVE_M3U",
+                            "description": "",
+                            "file.source": self.m3u_url,
+                            "http_proxy.ip": "",
+                            "http_proxy.port": "",
+                            "http_headers.origin": "",
+                            "http_headers.referer": ""
+                        }
+                    }
                 },
-                "cmd": "saveWizard"
+                "cmd": "saveFilesM3U"
             }
-            ws.send(json.dumps(wizard_request))
+            ws.send(json.dumps(m3u_request))
         except Exception as e:
             print(f"Error sending wizard data: {e}")
 
@@ -96,6 +105,7 @@ class ThreadfinWebSocketClient:
                     "authentication.xml": True,
                     "authentication.m3u": True,
                     "authentication.api": True,
+                    "EpgSource": "XEPG",
                     "api": True,
                     'ignoreFilters': True,
                     "enableNonAscii": True
@@ -221,8 +231,8 @@ def run_websocket_operations(m3u_url=None, epg_url=None, port=None, thread_user=
 
             # Print the filtered result
             filtered_result = {
-                "clientInfo": json_result.get("clientInfo"),
-                "data": json_result.get("data"),
+                # "clientInfo": json_result.get("clientInfo"),
+                # "data": json_result.get("data"),
                 "settings": settings
             }
             print(json.dumps(filtered_result, indent=4))
