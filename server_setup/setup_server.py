@@ -5,14 +5,14 @@ from server_setup.decryption import *
 
 
 def server_setup():
-    # load_dotenv('/app/compose/installed/media_server/.env')
-    load_dotenv()
+    load_dotenv('/app/compose/installed/media_server/.env')
+    # load_dotenv()
     url = os.getenv("jellyfin_url")
     user = os.getenv("admin_user")
-    passwrd = os.getenv("admin_pass")
+    # passwrd = os.getenv("admin_pass")
     movie_library_path = '/mnt/vods/Movie_VOD'
     tv_library_path = '/mnt/vods/TV_VOD'
-    # passwrd = decrypt_password(os.getenv("AdminPassword"))
+    passwrd = decrypt_password(os.getenv("AdminPassword"))
     print(url)
     print(user)
     print(passwrd)
