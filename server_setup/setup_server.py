@@ -7,8 +7,8 @@ from server_setup.decryption import *
 def server_setup():
     load_dotenv('/app/compose/installed/media_server/.env')
     # load_dotenv()
-    url = os.getenv("jellyfin_url")
-    user = os.getenv("admin_user")
+    url = os.getenv("server_ip")
+    user = os.getenv("AdminUser")
     # passwrd = os.getenv("admin_pass")
     movie_library_path = '/mnt/vods/Movie_VOD'
     tv_library_path = '/mnt/vods/TV_VOD'
