@@ -12,6 +12,8 @@ def server_setup():
     # passwrd = os.getenv("admin_pass")
     passwrd = decrypt_password(os.getenv("AdminPassword"))
     host_path_enabled = os.getenv("ADD_MEDIA_PATH", "")
+    movie_path = os.getenv("HOST_MOVIE", "")
+    tv_path = os.getenv("HOST_TV", "")
     print(url)
     print(user)
     print(passwrd)
@@ -19,8 +21,8 @@ def server_setup():
     client = create_client(url, user, passwrd)
     if host_path_enabled:
         try:
-            movie_library_path = '/data/movies'
-            tv_library_path = '/data/tvshows'  # Removed extra space at the beginning
+            movie_library_path = '/movies'
+            tv_library_path = '/tvshows'
             add_media_libraries(client, movie_library_path, tv_library_path)
             library_options(client, url)
         except Exception as e:
