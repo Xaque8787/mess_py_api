@@ -10,16 +10,22 @@ def server_setup():
     url = os.getenv("server_ip")
     user = os.getenv("AdminUser")
     # passwrd = os.getenv("admin_pass")
-    movie_library_path = '/mnt/vods/Movie_VOD'
-    tv_library_path = '/mnt/vods/TV_VOD'
     passwrd = decrypt_password(os.getenv("AdminPassword"))
+    host_path_enabled = os.getenv("ADD_MEDIA_PATH", "")
     print(url)
     print(user)
     print(passwrd)
     configure_server(url, user, passwrd)
     client = create_client(url, user, passwrd)
-    add_media_libraries(client, movie_library_path, tv_library_path)
-    library_options(client, url)
+    if host_path_enabled:
+        try:
+            movie_library_path = '/mnt/host_library/movies'
+            tv_library_path = '/mnt/host_library/tv'  # Removed extra space at the beginning
+            add_media_libraries(client, movie_library_path, tv_library_path)
+            library_options(client, url)
+        except Exception as e:
+            print(f"Error adding media libraries: {e}")
+
     user_id = find_user_mainID(client, user)
     update_policy(client, user_id, url)
 
