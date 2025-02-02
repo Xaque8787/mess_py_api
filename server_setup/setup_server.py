@@ -19,8 +19,8 @@ def server_setup():
     client = create_client(url, user, passwrd)
     if host_path_enabled:
         try:
-            movie_library_path = '/mnt/host_library/movies'
-            tv_library_path = '/mnt/host_library/tv'  # Removed extra space at the beginning
+            movie_library_path = '/data/movies'
+            tv_library_path = '/data/tvshows'  # Removed extra space at the beginning
             add_media_libraries(client, movie_library_path, tv_library_path)
             library_options(client, url)
         except Exception as e:
