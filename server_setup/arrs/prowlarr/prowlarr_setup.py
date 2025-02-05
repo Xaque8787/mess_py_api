@@ -1,4 +1,4 @@
-from prowlarr_api import *
+from server_setup.arrs.prowlarr.prowlarr_api import *
 
 
 def main():
