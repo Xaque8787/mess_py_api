@@ -23,10 +23,20 @@ def server_setup():
         try:
             movie_library_path = '/data/movies'
             tv_library_path = '/data/tvshows'
-            add_media_libraries(client, movie_library_path, tv_library_path)
-            library_options(client, url)
         except Exception as e:
-            print(f"Error adding media libraries: {e}")
+            print(f"Error setting host paths: {e}")
+    else:
+        try:
+            movie_library_path = '/mnt/jellyfin/movies'
+            tv_library_path = '/mnt/jellyfin/tv'
+        except Exception as e:
+            print(f"Error setting default paths: {e}")
+
+    try:
+        add_media_libraries(client, movie_library_path, tv_library_path)
+        library_options(client, url)
+    except Exception as e:
+        print(f"Error adding media libraries: {e}")
 
     user_id = find_user_mainID(client, user)
     update_policy(client, user_id, url)

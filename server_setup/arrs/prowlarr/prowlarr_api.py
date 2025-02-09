@@ -20,7 +20,7 @@ def get_prowlarr_headers():
 
     if not all([prowlarr_ip, prowlarr_port, prowlarr_apikey]):
         raise ValueError(
-            "One or more required environment variables (radarr_ip, radarr_port, radarr_apikey) are missing.")
+            "One or more required environment variables (prowlarr_ip, prowlarr_port, prowlarr_apikey) are missing.")
 
     # Construct the Radarr API base URL
     base_url = f"http://{prowlarr_ip}:{prowlarr_port}/api/v1"
@@ -99,7 +99,7 @@ def post_indexer():
         "downloadClientId": 0,
         "added": "2024-11-16T02:57:35Z",
         "sortName": "zilean",
-        "name": "Zilean2",
+        "name": "Zilean",
         "fields": [
             {
                 "order": 0,
