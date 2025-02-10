@@ -26,8 +26,8 @@ pytest = "^7.0"  # Optional, for development/testing
 
 
 [tool.poetry.scripts]
-setup-server = "server_setup.setup_server:server_setup"  # Expose your script as a CLI tool (if needed)
-setup-threadfin = "server_setup.setup_threadfin:threadfin_setup"
+setup-server = "server_setup.jellyfin_api.setup_server:server_setup"  # Expose your script as a CLI tool (if needed)
+setup-threadfin = "server_setup.threadfin.setup_threadfin:threadfin_setup"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
