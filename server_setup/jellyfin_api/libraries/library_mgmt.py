@@ -7,8 +7,10 @@ import json
 
 def add_media_libraries(client, movie_library_path=None, tv_library_path=None):
     libraries = [
-        {'name': 'Movies', 'collectionType': 'movies', 'paths': [movie_library_path]},
-        {'name': 'TV', 'collectionType': 'tvshows', 'paths': [tv_library_path]}
+        {'name': 'Movies', 'collectionType': 'movies',
+         'paths': ['/mnt/vods/Movie_VOD'] + ['/mnt/jellyfin/movies'] + ([movie_library_path] if movie_library_path else [])},
+        {'name': 'TV', 'collectionType': 'tvshows',
+         'paths': ['/mnt/vods/TV_VOD'] + ['/mnt/jellyfin/tv'] + ([tv_library_path] if tv_library_path else [])}
     ]
     for lib in libraries:
         try:
