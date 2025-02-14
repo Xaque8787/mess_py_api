@@ -39,4 +39,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if ping_prowlarr():  # Only run main() if Prowlarr API is reachable
+        print("Prowlarr API is available.")
+        main()
+    else:
+        print("Prowlarr API is unavailable. Exiting.")

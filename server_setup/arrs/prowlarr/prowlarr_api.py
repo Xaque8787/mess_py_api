@@ -2,18 +2,18 @@ import os
 from dotenv import load_dotenv
 import requests
 import json
-
+import time
 
 def get_prowlarr_headers():
     """
-    Load Radarr API details from a .env file and return the necessary headers for API requests.
+    Load API details from a .env file and return the necessary headers for API requests.
 
     Returns:
-        dict: A dictionary containing headers and the Radarr API URL.
+        dict: A dictionary containing headers and the API URL.
     """
     # Load environment variables from .env
     load_dotenv('/app/compose/installed/prowlarr_app/.env')
-    # Fetch Radarr details from environment variables
+    # Fetch details from environment variables
     prowlarr_ip = os.getenv("PROWLARR_IP")
     prowlarr_port = os.getenv("PROWLARR_PORT", "9696")
     prowlarr_apikey = os.getenv("PROWLARR_APIKEY")
@@ -33,6 +33,45 @@ def get_prowlarr_headers():
             "Content-Type": "application/json"
         }
     }
+
+
+def ping_prowlarr(max_retries=5, retry_interval=10):
+    """
+    Pings the Prowlarr API and retries if it's unavailable.
+
+    Args:
+        max_retries (int): The maximum number of retries before failing.
+        retry_interval (int): Time (in seconds) to wait between retries.
+
+    Returns:
+        bool: True if the API is reachable, False otherwise.
+    """
+    load_dotenv('/app/compose/installed/prowlarr_app/.env')
+    # Fetch details from environment variables
+    prowlarr_ip = os.getenv("PROWLARR_IP")
+    prowlarr_port = os.getenv("PROWLARR_PORT", "9696")
+    prowlarr_config = get_prowlarr_headers()
+    url = f"http://{prowlarr_ip}:{prowlarr_port}/ping"
+    headers = prowlarr_config['headers']
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            response = requests.head(url, headers=headers, timeout=5)
+            if response.status_code == 200:
+                print("API is available")
+                time.sleep(10)
+                return True
+            else:
+                print(f"Attempt {attempt}: API returned status code {response.status_code}")
+        except requests.RequestException as e:
+            print(f"Attempt {attempt}: API is unreachable: {e}")
+
+        if attempt < max_retries:
+            print(f"Retrying in {retry_interval} seconds...")
+            time.sleep(retry_interval)
+
+    print("Max retries reached. API is unavailable.")
+    return False
 
 
 def post_indexer():
