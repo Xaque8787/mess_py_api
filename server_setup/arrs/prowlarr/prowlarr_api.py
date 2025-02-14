@@ -346,11 +346,17 @@ def add_prowlarr_sync(server_name, server_ip, server_port, app_ip, app_port, api
     }
     print(json.dumps(payload, indent=2))
     response = requests.post(url, json=payload, headers=headers)
+    if response.status_code != 201:
+        print(f"Failed to add application: {response.status_code} - {response.text}")
+        print("Retrying request...")
+        time.sleep(15)  # Wait 2 seconds before retrying
+        response = requests.post(url, json=payload, headers=headers)
+
+        # Final status message after retry
     if response.status_code == 201:
         print("APP client configuration successfully added.")
     else:
-        print(f"Failed to add application: {response.status_code} - {response.text}")
-    # return response.json()  # Return the JSON response from the API
+        print(f"Retry failed, moving on: {response.status_code} - {response.text}")
 
 if __name__ == "__main__":
     get_prowlarr_headers()
