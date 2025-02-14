@@ -9,6 +9,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+exclude = ["**/*.env"]
 
 [tool.poetry.dependencies]
 python = ">=3.7"
@@ -20,6 +21,7 @@ requests = "2.32.3"
 #urllib3 = "2.2.2"
 websocket-client = "1.8.0"
 jellyfin-apiclient-python = { git = "https://github.com/jellyfin/jellyfin-apiclient-python.git", rev = "fe8c16c8e3a769743d1999d96f83fa14794648dc" }
+
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.0"  # Optional, for development/testing
