@@ -15,7 +15,7 @@ def get_prowlarr_headers():
     load_dotenv('/app/compose/installed/prowlarr_app/.env')
     # Fetch Radarr details from environment variables
     prowlarr_ip = os.getenv("PROWLARR_IP")
-    prowlarr_port = os.getenv("PROWLARR_PORT")
+    prowlarr_port = os.getenv("PROWLARR_PORT", "9696")
     prowlarr_apikey = os.getenv("PROWLARR_APIKEY")
 
     if not all([prowlarr_ip, prowlarr_port, prowlarr_apikey]):
