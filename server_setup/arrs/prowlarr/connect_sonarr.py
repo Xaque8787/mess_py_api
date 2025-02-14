@@ -7,9 +7,9 @@ def main():
     load_dotenv('/app/compose/installed/prowlarr_app/.env')
     server_name = 'Sonarr'
     server_ip = os.getenv("PROWLARR_IP")
-    server_port = os.getenv("PROWLARR_PORT")
+    server_port = os.getenv("PROWLARR_PORT", "9696")
     app_ip = os.getenv("SONARR_IP")
-    app_port = os.getenv("SONARR_PORT")
+    app_port = os.getenv("SONARR_PORT", "8989")
     api_key = os.getenv("SONARR_APIKEY")
     app_sync = {
         "order": 3,
