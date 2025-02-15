@@ -22,7 +22,7 @@ def blackhole_client(apikey, app_ip, app_port):
                     "order": 1,
                     "name": "port",
                     "label": "Port",
-                    "value": 8484,
+                    "value": 8282,
                     "type": "textbox",
                     "advanced": False,
                     "privacy": "normal",
