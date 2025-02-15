@@ -1,4 +1,4 @@
-from server_setup.arrs.sonarr.sonarr_api import *
+import os
 from dotenv import load_dotenv
 
 
