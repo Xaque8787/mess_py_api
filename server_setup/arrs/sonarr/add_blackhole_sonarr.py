@@ -1,9 +1,11 @@
 from server_setup.arrs.sonarr.sonarr_api import *
 from dotenv import load_dotenv
-from server_setup.arrs.sonarr.download_clients import *
+
 
 
 def add_blackhole_sonarr():
+    from server_setup.arrs.sonarr.sonarr_api import post_download_client
+    from server_setup.arrs.sonarr.download_clients import blackhole_client
     load_dotenv()
     load_dotenv('/app/compose/installed/sonarr_app/.env')
     apikey = os.getenv("SONARR_APIKEY", "")
