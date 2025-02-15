@@ -11,7 +11,7 @@ def get_radarr_headers():
         dict: A dictionary containing headers and the Radarr API URL.
     """
     # Load environment variables from .env
-    load_dotenv()
+    load_dotenv('/app/compose/installed/radarr_app/.env')
 
     # Fetch Radarr details from environment variables
     radarr_ip = os.getenv("RADARR_IP")
