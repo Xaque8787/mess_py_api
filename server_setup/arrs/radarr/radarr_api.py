@@ -15,7 +15,7 @@ def get_radarr_headers():
 
     # Fetch Radarr details from environment variables
     radarr_ip = os.getenv("RADARR_IP")
-    radarr_port = os.getenv("RADARR_PORT")
+    radarr_port = os.getenv("RADARR_PORT", "7878")
     radarr_apikey = os.getenv("RADARR_APIKEY")
 
     if not all([radarr_ip, radarr_port, radarr_apikey]):

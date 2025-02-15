@@ -15,7 +15,7 @@ def get_sonarr_headers():
 
     # Fetch Radarr details from environment variables
     sonarr_ip = os.getenv("SONARR_IP")
-    sonarr_port = os.getenv("SONARR_PORT")
+    sonarr_port = os.getenv("SONARR_PORT", "8989")
     sonarr_apikey = os.getenv("SONARR_APIKEY")
 
     if not all([sonarr_ip, sonarr_port, sonarr_apikey]):

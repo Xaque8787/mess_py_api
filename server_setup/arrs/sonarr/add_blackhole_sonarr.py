@@ -7,7 +7,9 @@ def add_blackhole_sonarr():
     load_dotenv()
     load_dotenv('/app/compose/installed/sonarr_app/.env')
     apikey = os.getenv("SONARR_APIKEY", "")
-    post_download_client(blackhole_client(apikey))
+    app_ip = os.getenv("SONARR_IP")
+    app_port = os.getenv("SONARR_PORT", "8989")
+    post_download_client(blackhole_client(apikey, app_ip, app_port))
 
 
 if __name__ == "__main__":

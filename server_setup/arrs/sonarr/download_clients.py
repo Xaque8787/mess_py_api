@@ -1,4 +1,4 @@
-def blackhole_client(apikey):
+def blackhole_client(apikey, app_ip, app_port):
     return {
             "id": 0,
             "enable": True,
@@ -53,7 +53,7 @@ def blackhole_client(apikey):
                     "order": 4,
                     "name": "username",
                     "label": "Username",
-                    "value": "http://172.22.0.5:7878",
+                    "value": f"http://{app_ip}:{app_port}",
                     "type": "textbox",
                     "advanced": False,
                     "privacy": "userName",
