@@ -1,17 +1,22 @@
 import requests
 from dotenv import load_dotenv
 import os
-load_dotenv()
-jellyseerr_ip = os.getenv("JELLYSEERR_IP", "")
+load_dotenv('/app/compose/installed/jellyseerr_app/.env')
+load_dotenv('/app/compose/installed/radarr_app/.env')
+load_dotenv('/app/compose/installed/sonarr_app/.env')
+load_dotenv('/app/compose/installed/media_server/.env')
+jellyseerr_ip = os.getenv("JELLYSEERR_IP", "10.21.12.5")
 jellyseerr_port = os.getenv("JELLYSEERR_PORT", "5055")
-radarr_ip = os.getenv("RADARR_IP", "")
-radarr_port = os.getenv("RADARR_PORT", "")
-sonarr_ip = os.getenv("SONARR_IP", "")
-sonarr_port = os.getenv("SONARR_PORT", "")
+radarr_ip = os.getenv("RADARR_IP", "10.21.12.11")
+radarr_port = os.getenv("RADARR_PORT", "7878")
+sonarr_ip = os.getenv("SONARR_IP", "10.21.12.12")
+sonarr_port = os.getenv("SONARR_PORT", "8989")
 radarr_apikey = os.getenv( "RADARR_APIKEY", "")
 sonarr_apikey = os.getenv("SONARR_APIKEY", "")
 BASE_URL = f"http://{jellyseerr_ip}:{jellyseerr_port}/api/v1"
-jellyfin_ip = os.getenv("JELLYFIN_IP", "")
+jellyfin_ip = os.getenv("JELLYFIN_IP", "10.21.12.3")
+username = os.getenv("AdminUser", "")
+password = os.getenv("AdminPassword", "")
 radarr_port = int(radarr_port) if radarr_port else None
 sonarr_port = int(sonarr_port) if sonarr_port else None
 
@@ -22,8 +27,8 @@ def authenticate():
     """Authenticate and retrieve session cookies."""
     auth_url = f"{BASE_URL}/auth/jellyfin"
     credentials = {
-        "username": "user",
-        "password": "pass",
+        "username": username,
+        "password": password,
         "hostname": jellyfin_ip,
         "port": 8096,
         "useSsl": False,
@@ -44,7 +49,7 @@ def authenticate():
 def reauthenticate(session):
     """Perform a second authentication to get a new session."""
     auth_url = f"{BASE_URL}/auth/jellyfin"
-    credentials = {"username": "user", "password": "pass"}
+    credentials = {"username": username, "password": password}
     response = session.post(auth_url, json=credentials)
     if response.status_code == 200:
         print("Reauthentication successful.")
@@ -53,7 +58,7 @@ def reauthenticate(session):
         print(f"Reauthentication failed: {response.text}")
         exit()
 
-def get_correct_api_key(session):
+def get_api_key(session):
     """Fetch the correct API key using session cookies."""
     settings_url = f"{BASE_URL}/settings/jellyfin"
     response = session.get(settings_url)
@@ -117,11 +122,11 @@ def enable_sonarr(session):
         "useSsl": False,
         "activeProfileId": 1,
         "activeProfileName": "720p/1080p",
-        "activeDirectory": "/mnt/jellyfin/tv",
+        "activeDirectory": "/mess_media/jellyfin/tv",
         "is4k": False,
-        "enableSeasonFolders": False,
+        "enableSeasonFolders": True,
         "isDefault": True,
-        "syncEnabled": False,
+        "syncEnabled": True,
         "preventSearch": False
     }
     response = session.post(sonarr_url, json=payload)
@@ -142,11 +147,11 @@ def enable_radarr(session):
         "useSsl": False,
         "activeProfileId": 1,
         "activeProfileName": "720p/1080p",
-        "activeDirectory": "/mnt/jellyfin/movies",
+        "activeDirectory": "/mess_media/jellyfin/movies",
         "is4k": False,
         "minimumAvailability": "Released",
         "isDefault": True,
-        "syncEnabled": False,
+        "syncEnabled": True,
         "preventSearch": False
     }
     response = session.post(radarr_url, json=payload)
@@ -158,7 +163,7 @@ def enable_radarr(session):
 
 if __name__ == "__main__":
     session = authenticate()
-    api_token = get_correct_api_key(session)
+    api_token = get_api_key(session)
     if api_token:
         initialize_application(session, api_token)
         session = reauthenticate(session)

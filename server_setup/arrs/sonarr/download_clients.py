@@ -63,7 +63,7 @@ def blackhole_client(apikey, app_ip, app_port):
                     "order": 5,
                     "name": "password",
                     "label": "Password",
-                    "value": apikey,  # Replace password with Radarr API key
+                    "value": apikey,
                     "type": "password",
                     "advanced": False,
                     "privacy": "password",
