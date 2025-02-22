@@ -1,9 +1,10 @@
 import requests
 from dotenv import load_dotenv
 import os
+from server_setup.decryption import *
 load_dotenv('/app/compose/installed/jellyseerr_app/.env')
 load_dotenv('/app/compose/installed/radarr_app/.env')
-load_dotenv('/app/compose/installed/sonarr_app/.env')
+load_dotenv('/app/compose//installed/sonarr_app/.env')
 load_dotenv('/app/compose/installed/media_server/.env')
 jellyseerr_ip = os.getenv("JELLYSEERR_IP", "10.21.12.5")
 jellyseerr_port = os.getenv("JELLYSEERR_PORT", "5055")
@@ -16,13 +17,14 @@ sonarr_apikey = os.getenv("SONARR_APIKEY", "")
 BASE_URL = f"http://{jellyseerr_ip}:{jellyseerr_port}/api/v1"
 jellyfin_ip = os.getenv("JELLYFIN_IP", "10.21.12.3")
 username = os.getenv("AdminUser", "")
-password = os.getenv("AdminPassword", "")
+password = decrypt_password(os.getenv("AdminPassword"))
 radarr_port = int(radarr_port) if radarr_port else None
 sonarr_port = int(sonarr_port) if sonarr_port else None
 
 print(BASE_URL)
 print(radarr_port)
 print(sonarr_port)
+print(username)
 def authenticate():
     """Authenticate and retrieve session cookies."""
     auth_url = f"{BASE_URL}/auth/jellyfin"
